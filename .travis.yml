@@ -1,11 +1,18 @@
 language: python
+dist: xenial
+sudo: true
+
 python:
   - 3.8
+
+env:
+  global:
+    - PIPENV_VENV_IN_PROJECT=1
+    - PIPENV_IGNORE_VIRTUALENVS=1
+
 install:
-  - pip install -q pipenv codecov
-  - pipenv sync --dev
+  - pip install pipenv
+  - pipenv sync -d
+
 script:
-  - flake8
-  - pytest curso-django --cov=curso-django
-after_success:
-  - codecov
+  - pipenv run flake8 .
